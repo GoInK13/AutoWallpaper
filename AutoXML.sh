@@ -22,8 +22,6 @@ if [ -z "$folder" ]; then
 	folder="/usr/share/backgrounds/Spidey" # Folder of pictures
 fi
 
-exit
-
 echo "<background>
   <starttime>
     <year>2017</year>
@@ -32,7 +30,7 @@ echo "<background>
     <hour>08</hour>
     <minute>00</minute>
     <second>00</second>
-  </starttime>" >> $PWD/folder.xml
+  </starttime>" >> $PWD/NewXML.xml
 
 for img in "$folder"/*.jpg
 do
@@ -41,8 +39,8 @@ do
 	echo "  <static>
     <duration>$time</duration>
     <file>$img</file>
-  </static>" >> $PWD/folder.xml
+  </static>" >> $PWD/NewXML.xml
 done
-echo "</background>" >> $PWD/folder.xml
+echo "</background>" >> $PWD/NewXML.xml
 
 exit 0
