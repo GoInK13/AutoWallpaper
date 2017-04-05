@@ -15,12 +15,20 @@
 # | ./Nature_Street-01:60.jpg
 # | ./Nature_Street-02:500.jpg
 
-echo -en "Folder of pictures to get: ex:/usr/share/backgrounds/Spidey :"
+echo -en "Folder of pictures to get: ex:/home/pierrot/Dropbox/Photos/Spidey :"
 read folder
 
 if [ -z "$folder" ]; then
-	folder="/usr/share/backgrounds/Spidey" # Folder of pictures
+	folder="/home/pierrot/Dropbox/Photos/Spidey" # Folder of pictures
 fi
+
+echo -en "Name of xml file: ex:Spidey :"
+read name
+if [ -z "$name" ]; then
+	name="Spidey"
+fi
+
+mv $folder/$name.xml $folder/${name}_old.xml
 
 echo "<background>
   <starttime>
@@ -30,17 +38,21 @@ echo "<background>
     <hour>08</hour>
     <minute>00</minute>
     <second>00</second>
-  </starttime>" >> $PWD/NewXML.xml
+  </starttime>" >> $folder/$name.xml
 
 for img in "$folder"/*.jpg
 do
 	time=${img#*:}
 	time=${time%.jpg*}
-	echo "  <static>
+	if [[ $time =~ ^[0-9]+$ ]]; then
+		echo "  <static>
     <duration>$time</duration>
     <file>$img</file>
-  </static>" >> $PWD/NewXML.xml
+  </static>" >> $folder/$name.xml
+	fi
 done
-echo "</background>" >> $PWD/NewXML.xml
+echo "</background>" >> $folder/$name.xml
+
+echo $folder/$name.xml created
 
 exit 0
